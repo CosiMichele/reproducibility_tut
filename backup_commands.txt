@@ -1,0 +1,21 @@
+# Installation/Prereqs
+
+sudo apt-get install tree
+pip install multiqc
+conda install -c conda-forge mamba
+mamba install -c bioconda nextflow
+mamba install -c conda-forge singularity
+mamba install -c bioconda salmon
+mamba install -c bioconda fastqc
+git clone https://github.com/CosiMichele/reproducibility_tut
+
+# Run
+cd reproducibility_tut
+nextflow run script2.nf 
+nextflow run script3.nf 
+nextflow run script3.nf --reads "data/ggal/*_{1,2}.fq"
+nextflow run script4.nf -resume --reads 'data/ggal/*_{1,2}.fq'
+nextflow run script5.nf --resume
+nextflow run script6.nf -resume --reads 'data/ggal/*_{1,2}.fq'
+nextflow run script6.nf -resume --reads 'data/ggal/*_{1,2}.fq'
+nextflow run script7.nf -resume --reads 'data/ggal/*_{1,2}.fq'
