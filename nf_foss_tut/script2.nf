@@ -1,7 +1,7 @@
 /* 
  * pipeline input parameters 
  */
-params.reads = "$baseDir/data/ggal/*_{1,2}.fq"
+params.reads = "$baseDir/data/ggal/gut_{1,2}.fq"
 params.transcriptome = "$baseDir/data/ggal/transcriptome.fa"
 params.multiqc = "$baseDir/multiqc"
 params.outdir = "results"
@@ -15,26 +15,5 @@ println """\
          """
          .stripIndent()
 
-/* 
- * create a transcriptome file object given then transcriptome string parameter
- */
-transcriptome_file = file(params.transcriptome)
- 
-/* 
- * define the `index` process that create a binary index 
- * given the transcriptome file
- */
-process index {
-    conda "bioconda::salmon"
-    input:
-    file transcriptome from transcriptome_file
-     
-    output:
-    file 'index' into index_ch
 
-    script:       
-    """
-    salmon index --threads $task.cpus -t $transcriptome -i index
-    """
-}
- 
+read_pairs_ch = Channel .fromFilePairs( params.reads )

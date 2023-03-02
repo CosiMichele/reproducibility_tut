@@ -26,7 +26,7 @@ transcriptome_file = file(params.transcriptome)
  */
 process index {
     conda "bioconda::salmon"
-    
+
     input:
     file transcriptome from transcriptome_file
      
@@ -64,7 +64,7 @@ process quantification {
 
 process fastqc {
     tag "FASTQC on $sample_id"
-    conda "bioconda::fastqc" 
+    conda "bioconda::fastqc"
 
     input:
     set sample_id, file(reads) from read_pairs2_ch
@@ -84,7 +84,6 @@ process fastqc {
 process multiqc {
     publishDir params.outdir, mode:'copy'
     conda "bioconda::multiqc"
-    
        
     input:
     file('*') from quant_ch.mix(fastqc_ch).collect()
@@ -98,3 +97,7 @@ process multiqc {
     """
 } 
 
+
+workflow.onComplete { 
+	println ( workflow.success ? "\nDone! Open the following report in your browser --> $params.outdir/multiqc_report.html\n" : "Oops .. something went wrong" )
+}

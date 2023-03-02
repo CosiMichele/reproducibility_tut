@@ -19,3 +19,11 @@ nextflow run script5.nf --resume
 nextflow run script6.nf -resume --reads 'data/ggal/*_{1,2}.fq'
 nextflow run script6.nf -resume --reads 'data/ggal/*_{1,2}.fq'
 nextflow run script7.nf -resume --reads 'data/ggal/*_{1,2}.fq'
+
+# Files
+script2.nf > script1.nf
+script3.nf > script2.nf
+script4.nf > script3.nf
+script5.nf > script4.nf
+script6.nf > script5.nf
+script7.nf > script6.nf

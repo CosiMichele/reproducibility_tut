@@ -26,7 +26,7 @@ transcriptome_file = file(params.transcriptome)
  */
 process index {
     conda "bioconda::salmon"
- 
+    
     input:
     file transcriptome from transcriptome_file
      
@@ -43,11 +43,12 @@ process index {
 Channel 
     .fromFilePairs( params.reads )
     .ifEmpty { error "Cannot find any reads matching: ${params.reads}"  }
-    .set { read_pairs_ch } 
+    .into { read_pairs_ch; read_pairs2_ch } 
 
 process quantification {
+    tag "$pair_id"
     conda "bioconda::salmon"
-     
+         
     input:
     file index from index_ch
     set pair_id, file(reads) from read_pairs_ch
@@ -62,11 +63,11 @@ process quantification {
 }
 
 process fastqc {
-    conda "bioconda::fastqc"
     tag "FASTQC on $sample_id"
+    conda "bioconda::fastqc" 
 
     input:
-    set sample_id, file(reads) from read_pairs_ch
+    set sample_id, file(reads) from read_pairs2_ch
 
     output:
     file("fastqc_${sample_id}_logs") into fastqc_ch
@@ -79,4 +80,21 @@ process fastqc {
     """  
 }  
  
+
+process multiqc {
+    publishDir params.outdir, mode:'copy'
+    conda "bioconda::multiqc"
+    
+       
+    input:
+    file('*') from quant_ch.mix(fastqc_ch).collect()
+    
+    output:
+    file('multiqc_report.html')  
+     
+    script:
+    """
+    multiqc . 
+    """
+} 
 
