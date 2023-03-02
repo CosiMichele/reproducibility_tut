@@ -42,3 +42,8 @@ nextflow run script6.nf -resume --reads 'data/ggal/*_{1,2}.fq'
 script3.nf > script2.nf
 script6.nf > script3.nf
 script4.nf > example_script.nf
+
+# Execute as (final)
+nextflow run script1.nf
+nextflow run script2.nf -resume --reads 'data/ggal/*_{1,2}.fq'
+nextflow run script3.nf -resume --reads 'data/ggal/*_{1,2}.fq'
