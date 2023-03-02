@@ -37,3 +37,8 @@ nextflow run script3.nf -resume --reads 'data/ggal/*_{1,2}.fq'
 #nextflow run script5.nf -resume --reads 'data/ggal/*_{1,2}.fq'
 #nextflow run script5.nf -resume --reads 'data/ggal/*_{1,2}.fq'
 nextflow run script6.nf -resume --reads 'data/ggal/*_{1,2}.fq'
+
+# Second mod for tut based on first change
+script3.nf > script2.nf
+script6.nf > script3.nf
+script4.nf > example_script.nf
