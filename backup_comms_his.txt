@@ -9,21 +9,31 @@ mamba install -c bioconda salmon
 mamba install -c bioconda fastqc
 git clone https://github.com/CosiMichele/reproducibility_tut
 
-# Run
+# Original Run
 cd reproducibility_tut
 nextflow run script2.nf 
 nextflow run script3.nf 
 nextflow run script3.nf --reads "data/ggal/*_{1,2}.fq"
 nextflow run script4.nf -resume --reads 'data/ggal/*_{1,2}.fq'
-nextflow run script5.nf --resume
+nextflow run script5.nf -resume
 nextflow run script6.nf -resume --reads 'data/ggal/*_{1,2}.fq'
 nextflow run script6.nf -resume --reads 'data/ggal/*_{1,2}.fq'
 nextflow run script7.nf -resume --reads 'data/ggal/*_{1,2}.fq'
 
-# Files
+# Files mod for tut
 script2.nf > script1.nf
 script3.nf > script2.nf
 script4.nf > script3.nf
 script5.nf > script4.nf
 script6.nf > script5.nf
 script7.nf > script6.nf
+
+# Therefore - run post mod
+nextflow run script1.nf 
+# nextflow run script2.nf 
+# nextflow run script2.nf --reads "data/ggal/*_{1,2}.fq"
+nextflow run script3.nf -resume --reads 'data/ggal/*_{1,2}.fq'
+# nextflow run script4.nf -resume
+#nextflow run script5.nf -resume --reads 'data/ggal/*_{1,2}.fq'
+#nextflow run script5.nf -resume --reads 'data/ggal/*_{1,2}.fq'
+nextflow run script6.nf -resume --reads 'data/ggal/*_{1,2}.fq'
